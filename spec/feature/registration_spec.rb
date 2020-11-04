@@ -129,6 +129,16 @@ RSpec.feature "Registration" do
     end
   end
 
+  context "when the phone number is international" do
+    it "continues to MFA code" do
+      enter_email_address
+      enter_password_and_confirmation
+      enter_international_phone_number
+
+      expect(page).to have_text(I18n.t("mfa.code.sign_up_heading"))
+    end
+  end
+
   context "when the phone number is invalid" do
     it "returns an error" do
       enter_email_address
@@ -234,6 +244,11 @@ RSpec.feature "Registration" do
 
   def enter_phone_number
     fill_in "phone", with: phone_number
+    click_on I18n.t("mfa.phone.create.fields.submit.label")
+  end
+
+  def enter_international_phone_number
+    fill_in "phone", with: "+1-541-754-3010"
     click_on I18n.t("mfa.phone.create.fields.submit.label")
   end
 

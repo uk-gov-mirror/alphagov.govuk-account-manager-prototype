@@ -7,7 +7,9 @@ module MultiFactorAuth
   class NotConfigured < MFAError; end
 
   def self.valid?(phone_number)
-    TelephoneNumber.valid?(phone_number, :gb, [:mobile])
+    return true if TelephoneNumber.valid?(phone_number, :gb, [:mobile])
+
+    TelephoneNumber.parse(phone_number).valid_types.include?(:mobile)
   end
 
   def self.generate_and_send_code(auth, use_unconfirmed: false)
