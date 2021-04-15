@@ -104,10 +104,8 @@ class User < ApplicationRecord
   end
 
   def validate_phone_number
-    if phone.blank?
-      errors.add :phone, :blank
-    elsif !MultiFactorAuth.valid?(phone)
-      errors.add :phone, :invalid
+    if phone.present?
+      errors.add :phone, :invalid unless MultiFactorAuth.valid?(phone)
     end
   end
 
