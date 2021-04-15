@@ -57,4 +57,5 @@ group :development do
   gem "awesome_print"
   gem "listen"
   gem "rubocop-govuk"
+  gem "faker"
 end
